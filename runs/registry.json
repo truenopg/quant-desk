@@ -1,0 +1,335 @@
+{
+  "hypotheses": [
+    {
+      "asset": "BTC",
+      "critic": "too few trades to say anything",
+      "family": "sma",
+      "id": "H001",
+      "params": {
+        "fast": 13,
+        "slow": 53,
+        "target_r": 3.0
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "sma variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": -0.2988,
+        "exposure": 0.2503,
+        "maxdd": -0.0379,
+        "pf": 0.48,
+        "ret": -0.0325,
+        "sharpe": -0.5061,
+        "sortino": -0.6466,
+        "trades": 6,
+        "win": 0.1667
+      },
+      "status": "rejected"
+    },
+    {
+      "asset": "BTC",
+      "critic": "passes selection floor",
+      "family": "donchian",
+      "holdout": {
+        "bars": 330,
+        "bh_calmar": -0.6355,
+        "bh_ret": -0.3022,
+        "calmar": 2.6115,
+        "exposure": 0.0848,
+        "maxdd": -0.0128,
+        "ret": 0.0437,
+        "sharpe": 1.3144,
+        "trades": 3
+      },
+      "id": "H002",
+      "params": {
+        "entry": 44,
+        "exit": 14,
+        "target_r": 3.47
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "donchian variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": 0.3578,
+        "exposure": 0.3051,
+        "maxdd": -0.0456,
+        "pf": 2.2615,
+        "ret": 0.048,
+        "sharpe": 0.4894,
+        "sortino": 0.7413,
+        "trades": 9,
+        "win": 0.5556
+      },
+      "status": "holdout-tested"
+    },
+    {
+      "asset": "BTC",
+      "critic": "too few trades to say anything",
+      "family": "sma",
+      "id": "H003",
+      "params": {
+        "fast": 33,
+        "slow": 119,
+        "target_r": null
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "sma variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": 0.0833,
+        "exposure": 0.223,
+        "maxdd": -0.0292,
+        "pf": Infinity,
+        "ret": 0.0071,
+        "sharpe": 0.1146,
+        "sortino": 0.1587,
+        "trades": 1,
+        "win": 1.0
+      },
+      "status": "rejected"
+    },
+    {
+      "asset": "BTC",
+      "critic": "too few trades to say anything",
+      "family": "sma",
+      "id": "H004",
+      "params": {
+        "fast": 23,
+        "slow": 54,
+        "target_r": null
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "sma variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": -0.1611,
+        "exposure": 0.249,
+        "maxdd": -0.035,
+        "pf": 0.5568,
+        "ret": -0.0162,
+        "sharpe": -0.2127,
+        "sortino": -0.2844,
+        "trades": 6,
+        "win": 0.1667
+      },
+      "status": "rejected"
+    },
+    {
+      "asset": "BTC",
+      "critic": "passes selection floor",
+      "family": "donchian",
+      "id": "H005",
+      "params": {
+        "entry": 43,
+        "exit": 17,
+        "target_r": 3.01
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "donchian variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": 0.2371,
+        "exposure": 0.2695,
+        "maxdd": -0.0456,
+        "pf": 1.2599,
+        "ret": 0.0316,
+        "sharpe": 0.3818,
+        "sortino": 0.5526,
+        "trades": 9,
+        "win": 0.4444
+      },
+      "status": "selected"
+    },
+    {
+      "asset": "BTC",
+      "critic": "too few trades to say anything",
+      "family": "donchian",
+      "id": "H006",
+      "params": {
+        "entry": 65,
+        "exit": 16,
+        "target_r": 3.43
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "donchian variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": 0.5432,
+        "exposure": 0.3105,
+        "maxdd": -0.0421,
+        "pf": 3.2588,
+        "ret": 0.0677,
+        "sharpe": 0.7241,
+        "sortino": 1.1854,
+        "trades": 6,
+        "win": 0.5
+      },
+      "status": "rejected"
+    },
+    {
+      "asset": "GOLD",
+      "critic": "too few trades to say anything",
+      "family": "sma",
+      "id": "H007",
+      "params": {
+        "fast": 27,
+        "slow": 103,
+        "target_r": null
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "sma variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": 0.0,
+        "exposure": 0.0,
+        "maxdd": 0.0,
+        "pf": 0.0,
+        "ret": 0.0,
+        "sharpe": 0.0,
+        "sortino": 0.0,
+        "trades": 0,
+        "win": 0.0
+      },
+      "status": "rejected"
+    },
+    {
+      "asset": "GOLD",
+      "critic": "too few trades to say anything",
+      "family": "rsi",
+      "id": "H008",
+      "params": {
+        "period": 4,
+        "rsi_entry": 13.09
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "rsi variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": 67.466,
+        "exposure": 0.0119,
+        "maxdd": -0.0001,
+        "pf": Infinity,
+        "ret": 0.0185,
+        "sharpe": 1.5123,
+        "sortino": 95.071,
+        "trades": 1,
+        "win": 1.0
+      },
+      "status": "rejected"
+    },
+    {
+      "asset": "GOLD",
+      "critic": "passes selection floor",
+      "family": "donchian",
+      "holdout": {
+        "bars": 228,
+        "bh_calmar": -0.5716,
+        "bh_ret": -0.1703,
+        "calmar": 2.4417,
+        "exposure": 0.0921,
+        "maxdd": -0.013,
+        "ret": 0.0285,
+        "sharpe": 1.4183,
+        "trades": 1
+      },
+      "id": "H009",
+      "params": {
+        "entry": 40,
+        "exit": 23,
+        "target_r": 2.68
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "donchian variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": 1.1438,
+        "exposure": 0.2103,
+        "maxdd": -0.0273,
+        "pf": 3.063,
+        "ret": 0.0633,
+        "sharpe": 0.8424,
+        "sortino": 1.1777,
+        "trades": 8,
+        "win": 0.5
+      },
+      "status": "holdout-tested"
+    },
+    {
+      "asset": "GOLD",
+      "critic": "passes selection floor",
+      "family": "donchian",
+      "id": "H010",
+      "params": {
+        "entry": 43,
+        "exit": 20,
+        "target_r": 2.2
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "donchian variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": 1.0251,
+        "exposure": 0.2004,
+        "maxdd": -0.0275,
+        "pf": 3.5607,
+        "ret": 0.0571,
+        "sharpe": 0.7889,
+        "sortino": 1.0878,
+        "trades": 8,
+        "win": 0.5
+      },
+      "status": "selected"
+    },
+    {
+      "asset": "GOLD",
+      "critic": "passes selection floor",
+      "family": "rsi",
+      "id": "H011",
+      "params": {
+        "period": 2,
+        "rsi_entry": 8.59
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "rsi variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": 0.7067,
+        "exposure": 0.0496,
+        "maxdd": -0.0172,
+        "pf": 2.9249,
+        "ret": 0.0244,
+        "sharpe": 0.8088,
+        "sortino": 1.2949,
+        "trades": 9,
+        "win": 0.8889
+      },
+      "status": "selected"
+    },
+    {
+      "asset": "GOLD",
+      "critic": "too few trades to say anything",
+      "family": "rsi",
+      "id": "H012",
+      "params": {
+        "period": 4,
+        "rsi_entry": 13.07
+      },
+      "proposed_at": "2026-11-26T10:29:28+00:00",
+      "rationale": "rsi variant, params drawn in declared ranges",
+      "seen_before": false,
+      "selection": {
+        "calmar": 67.466,
+        "exposure": 0.0119,
+        "maxdd": -0.0001,
+        "pf": Infinity,
+        "ret": 0.0185,
+        "sharpe": 1.5123,
+        "sortino": 95.071,
+        "trades": 1,
+        "win": 1.0
+      },
+      "status": "rejected"
+    }
+  ]
+}
