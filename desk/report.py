@@ -37,14 +37,14 @@ def main() -> None:
                 color="black", lw=1.2, label="buy & hold")
         lines += [f"## {asset} (OOS {oos[0].ts.date()} .. {oos[-1].ts.date()}, "
                   f"buy&hold {bh['ret']:+.1%})", "",
-                  "| candidate | verdict | OOS ret | sharpe | maxDD | trades | beats B&H |",
-                  "|---|---|---|---|---|---|---|"]
+                  "| candidate | verdict | OOS ret | sharpe | maxDD | calmar | exposure | trades |",
+                  "|---|---|---|---|---|---|---|---|",
+                  f"| **buy & hold** | - | {bh['ret']:+.1%} | - | {bh['maxdd']:.1%} | {bh['calmar']:.2f} | 100% | - |"]
         for name, factory in CANDIDATES:
             r = run_one(factory, oos, costs)
             v = verdict(r["sharpe"], r["ret"], r["trades"])
-            beats = "yes" if r["ret"] > bh["ret"] else "NO"
             lines.append(f"| {name} | {v} | {r['ret']:+.1%} | {r['sharpe']:.2f} | "
-                         f"{r['maxdd']:.1%} | {r['trades']} | {beats} |")
+                         f"{r['maxdd']:.1%} | {r['calmar']:.2f} | {r['exposure']:.0%} | {r['trades']} |")
             if v == "PASS":
                 ax.plot(ts, [e / CASH - 1 for e in r["bt"].equity_curve],
                         lw=1, label=name)

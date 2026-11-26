@@ -20,7 +20,7 @@ from desk.strategies import DonchianBreakout, RsiMeanReversion, SmaTrendCross
 from bt.broker import Broker, CostModel
 from bt.data import load_csv
 from bt.engine import Backtest
-from bt.stats import summary, trade_stats
+from bt.stats import summary, trade_stats, calmar, sortino
 from bt.strategies import BuyAndHold
 
 OOS_START = datetime(2024, 1, 1)
@@ -29,9 +29,11 @@ CASH = 10_000.0
 
 DATA = Path(__file__).resolve().parent.parent / "data"
 
+# gold file is GC=F futures (Yahoo), used as the XAUUSD proxy - same caveat
+# as paper-trader's research protocol; it is NOT spot gold at a prop firm.
 ASSETS = {
     "BTC": ("btc_1d.csv", CostModel(commission_bps=12.5, slippage_bps=12.5)),
-    "XAUUSD": ("xauusd_1d.csv", CostModel(commission_bps=1.5, slippage_bps=1.5)),
+    "GOLD": ("xauusd_1d.csv", CostModel(commission_bps=1.5, slippage_bps=1.5)),
 }
 
 # Candidate grid: the three paper-trader families plus nearby variants the
@@ -53,13 +55,33 @@ def verdict(oos_sharpe: float, oos_ret: float, oos_trades: int) -> str:
     return "FAIL"
 
 
+def exposure(fills, bars) -> float:
+    """Fraction of bars spent with an open position, replayed from fills."""
+    if not bars:
+        return 0.0
+    queue = sorted(fills, key=lambda f: f.ts)
+    pos = 0.0
+    in_market = 0
+    i = 0
+    for b in bars:
+        while i < len(queue) and queue[i].ts <= b.ts:
+            f = queue[i]
+            pos += f.qty if f.side.value == "buy" else -f.qty
+            i += 1
+        if abs(pos) > 1e-12:
+            in_market += 1
+    return in_market / len(bars)
+
+
 def run_one(factory, bars, costs):
     bt = Backtest(factory(), Broker(CASH, costs))
     bt.run(bars)
     s = summary(bt.equity_curve)
     t = trade_stats(bt.broker.fills)
-    return {**{f"sharpe": s["sharpe"], "ret": s["total_return"],
-               "maxdd": s["max_drawdown"]},
+    return {"sharpe": s["sharpe"], "ret": s["total_return"],
+            "maxdd": s["max_drawdown"],
+            "calmar": calmar(bt.equity_curve), "sortino": sortino(bt.equity_curve),
+            "exposure": exposure(bt.broker.fills, bars),
             "trades": t["trades"], "win": t["win_rate"], "pf": t["profit_factor"],
             "bt": bt}
 
@@ -82,14 +104,19 @@ def main() -> list[dict]:
                    "oos_ret": oos_r["ret"], "oos_sharpe": oos_r["sharpe"],
                    "oos_maxdd": oos_r["maxdd"], "oos_trades": oos_r["trades"],
                    "oos_win": oos_r["win"], "oos_pf": oos_r["pf"],
+                   "oos_calmar": oos_r["calmar"], "oos_exposure": oos_r["exposure"],
                    "is_sharpe": is_r["sharpe"], "is_ret": is_r["ret"],
-                   "bh_oos_ret": bh["ret"],
+                   "bh_oos_ret": bh["ret"], "bh_oos_calmar": bh["calmar"],
+                   "bh_oos_maxdd": bh["maxdd"],
                    "oos_start": str(oos_bars[0].ts.date()),
                    "oos_end": str(oos_bars[-1].ts.date())}
             rows.append(row)
             print(f"{v}  {name:20s} IS sharpe {is_r['sharpe']:5.2f} | "
                   f"OOS ret {oos_r['ret']:+7.1%} sharpe {oos_r['sharpe']:5.2f} "
-                  f"maxDD {oos_r['maxdd']:6.1%} trades {oos_r['trades']:3} PF {oos_r['pf']:5.2f}")
+                  f"maxDD {oos_r['maxdd']:6.1%} calmar {oos_r['calmar']:5.2f} "
+                  f"exposure {oos_r['exposure']:4.0%} trades {oos_r['trades']:3}")
+        print(f"    benchmark buy&hold: ret {bh['ret']:+.1%} maxDD {bh['maxdd']:.1%} "
+              f"calmar {bh['calmar']:.2f} exposure 100%")
     return rows
 
 
