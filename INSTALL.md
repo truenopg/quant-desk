@@ -1,5 +1,12 @@
 # Install
 
+Clone with submodules (the backtest engine lives in a linked repo):
+
+    git clone --recurse-submodules https://github.com/truenopg/quant-desk.git
+    cd quant-desk
+    # already cloned without the flag? -> git submodule update --init
+
+
 Needs Python 3.10+ and about 4 GB of free RAM when the local model runs.
 Disk: ~2.5 GB (Python deps ~1.2 GB, model ~1 GB on first model run).
 
