@@ -18,9 +18,13 @@ the roadmap, not the current state.
 
 ## Run it
 
-    pip install -r requirements.txt   # requests, pandas, matplotlib
+Install first: see INSTALL.md (Linux / macOS / Windows, ~2.5 GB disk
+with the model, no keys, no cost).
+
     python -m desk.fetch              # BTC dailies (Coinbase), gold dailies (Yahoo GC=F)
     python -m desk.runner             # IS/OOS run with verdicts
+    python -m desk.cycle --seed 42    # deterministic cycle + registry
+    python -m desk.model_cycle --seed 7   # same cycle with the local model
     python -m desk.report             # runs/<today>/report.md + equity figures
     python -m unittest discover -s tests
 

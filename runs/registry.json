@@ -441,6 +441,90 @@
         "win": 0.4286
       },
       "status": "rejected"
+    },
+    {
+      "id": "V001",
+      "asset": "BTC",
+      "family": "donchian",
+      "params": {
+        "entry": 55,
+        "exit": 20,
+        "target_r": 3.0
+      },
+      "rationale": "v1 grid: donchian 3R",
+      "status": "explored-v1",
+      "critic": "pre-registry grid run, full window 2022-2026; results in runs/2026-11-26/report.md",
+      "seen_before": true
+    },
+    {
+      "id": "V002",
+      "asset": "BTC",
+      "family": "donchian",
+      "params": {
+        "entry": 40,
+        "exit": 20,
+        "target_r": 3.0
+      },
+      "rationale": "v1 grid: donchian 40d 3R (best v1)",
+      "status": "explored-v1",
+      "critic": "pre-registry grid run, full window 2022-2026; results in runs/2026-11-26/report.md",
+      "seen_before": true
+    },
+    {
+      "id": "V003",
+      "asset": "BTC",
+      "family": "sma",
+      "params": {
+        "fast": 20,
+        "slow": 50,
+        "target_r": 3.0
+      },
+      "rationale": "v1 grid: sma cross 3R",
+      "status": "explored-v1",
+      "critic": "pre-registry grid run, full window 2022-2026; results in runs/2026-11-26/report.md",
+      "seen_before": true
+    },
+    {
+      "id": "V004",
+      "asset": "GOLD",
+      "family": "donchian",
+      "params": {
+        "entry": 55,
+        "exit": 20,
+        "target_r": 3.0
+      },
+      "rationale": "v1 grid: donchian 3R",
+      "status": "explored-v1",
+      "critic": "pre-registry grid run, full window 2022-2026; results in runs/2026-11-26/report.md",
+      "seen_before": true
+    },
+    {
+      "id": "V005",
+      "asset": "GOLD",
+      "family": "donchian",
+      "params": {
+        "entry": 40,
+        "exit": 20,
+        "target_r": 3.0
+      },
+      "rationale": "v1 grid: donchian 40d 3R (best v1)",
+      "status": "explored-v1",
+      "critic": "pre-registry grid run, full window 2022-2026; results in runs/2026-11-26/report.md",
+      "seen_before": true
+    },
+    {
+      "id": "V006",
+      "asset": "GOLD",
+      "family": "sma",
+      "params": {
+        "fast": 20,
+        "slow": 50,
+        "target_r": 3.0
+      },
+      "rationale": "v1 grid: sma cross 3R",
+      "status": "explored-v1",
+      "critic": "pre-registry grid run, full window 2022-2026; results in runs/2026-11-26/report.md",
+      "seen_before": true
     }
   ]
 }

@@ -11,7 +11,10 @@ from desk.agents import FAMILIES, Critic
 from desk.model import extract_json
 
 
-def _clamp(family: str, params: dict) -> dict:
+def _clamp(family: str, params: dict, fixes: list | None = None) -> dict:
+    """Range-check model params. Any change to what the model wrote is
+    appended to `fixes` as "param: raw -> used" and stored on the
+    hypothesis - normalization is recorded, never silent."""
     spec = FAMILIES[family]
     out = {}
     for key, (lo, hi) in spec["ranges"].items():
@@ -19,6 +22,8 @@ def _clamp(family: str, params: dict) -> dict:
         if isinstance(v, list):
             if len(v) != 1:
                 raise ValueError(f"{key}: list value {v!r}")
+            if fixes is not None:
+                fixes.append(f"{key}: {v!r} -> {v[0]!r} (unwrapped)")
             v = v[0]
         if v is None:
             out[key] = None
@@ -28,9 +33,15 @@ def _clamp(family: str, params: dict) -> dict:
         else:
             lo2 = lo if lo is not None else 0.0
             out[key] = round(max(lo2, min(hi, float(v))), 2)
+        if fixes is not None and out[key] != v:
+            fixes.append(f"{key}: {v!r} -> {out[key]!r} (clamped)")
     if family == "sma" and (out.get("fast") or 0) >= (out.get("slow") or 1):
+        if fixes is not None:
+            fixes.append(f"slow: {out.get('slow')!r} -> {out['fast'] + 30!r} (fast>=slow)")
         out["slow"] = out["fast"] + 30
     if family == "donchian" and (out.get("exit") or 99) >= (out.get("entry") or 0):
+        if fixes is not None:
+            fixes.append(f"exit: {out.get('exit')!r} -> {max(10, out['entry'] - 20)!r} (exit>=entry)")
         out["exit"] = max(10, out["entry"] - 20)
     return out
 
@@ -72,7 +83,8 @@ class ModelProposer:
                 fam = h["family"]
                 if fam not in FAMILIES:
                     raise ValueError(f"unknown family {fam!r}")
-                params = _clamp(fam, h["params"])
+                fixes: list = []
+                params = _clamp(fam, h["params"], fixes)
                 dupe = any(x["asset"] == asset and x["family"] == fam
                            and x["params"] == params for x in
                            list(reg["hypotheses"]) + out)
@@ -81,7 +93,8 @@ class ModelProposer:
                 out.append({"id": f"M{start_id + len(out):03d}", "asset": asset,
                             "family": fam, "params": params,
                             "rationale": str(h.get("rationale", ""))[:200],
-                            "model_raw": raw.strip()[:400], "seen_before": False})
+                            "model_raw": raw.strip()[:400], "seen_before": False,
+                            "normalizations": fixes})
             except Exception as e:
                 last_err = e
         if not out:
