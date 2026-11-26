@@ -75,3 +75,28 @@ First cycle (`runs/cycle_2026-11-26.md`): 12 hypotheses, 7 rejected by
 the critic, 1 per asset opened the holdout. BTC H002 (donchian 44/14,
 3.47R): holdout +4.4% vs buy&hold -30.2%, but only 3 holdout trades -
 anecdote, not proof. Gold H009 similar warning with 1 trade.
+
+## Model-backed cycle (v3)
+
+    python -m desk.model_cycle --seed 7        # real local model, holdout CLOSED by default
+    python -m desk.model_cycle --backend ollama  # same, via a local Ollama server
+
+A real model sits in the ideation and critique seats
+(Qwen2.5-0.5B-Instruct, runs locally on CPU via transformers - no API
+key, no cost; `--backend ollama` uses a local Ollama server instead).
+The model proposes hypotheses as strict JSON (parsed, range-checked,
+duplicate-checked; a bad reply fails loudly, never silently replaced by
+RNG) and writes the prose critique. Validation stays deterministic and
+separate: backtests on the selection window, verdicts from the
+rule-based critic. Raw model replies are stored per hypothesis in
+`runs/registry.json` (`model_raw`).
+
+Reproducible: same seed + same registry = same proposals. First model
+cycle: `runs/model_cycle_2026-11-26.md` - 4 model hypotheses, 2 selected
+on BTC, both GOLD ideas rejected (too few trades), holdout untouched.
+
+Known quality limits, honestly: a 0.5B local model is a weak analyst.
+Rationales are generic and its critiques sometimes misread the metrics
+(see M001/M003 in the transcript) - useful as a protocol skeleton and a
+diversity source, not as research judgment. Swapping in a stronger
+model (bigger local, or a paid API) changes only `desk/model.py`.

@@ -55,3 +55,25 @@ class TestBenchmarkAlignment(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+import unittest as _u
+from desk.model import extract_json
+from desk.llm_agents import _clamp
+
+
+class TestModelParsing(_u.TestCase):
+    def test_extract_json_from_prose(self):
+        h = extract_json('Sure! ```json\n{"family": "rsi", "params": {"period": 2, "rsi_entry": 9.5}}\n``` ok')
+        self.assertEqual(h["family"], "rsi")
+        self.assertEqual(h["params"]["period"], 2)
+
+    def test_extract_json_fails_loud(self):
+        with self.assertRaises(ValueError):
+            extract_json("no json here")
+
+    def test_clamp_unwraps_and_bounds(self):
+        p = _clamp("donchian", {"entry": [45], "exit": 99, "target_r": 9.9})
+        self.assertEqual(p, {"entry": 45, "exit": 25, "target_r": 4.0})
+        p = _clamp("sma", {"fast": 40, "slow": 30, "target_r": None})
+        self.assertGreater(p["slow"], p["fast"])
+        self.assertIsNone(p["target_r"])

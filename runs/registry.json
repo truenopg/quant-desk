@@ -330,6 +330,117 @@
         "win": 1.0
       },
       "status": "rejected"
+    },
+    {
+      "asset": "BTC",
+      "critic": "passes selection floor",
+      "critic_note": "Critique:\nThe strategy, while effective in capturing short-term market trends, seems to have overestimated the probability of breakout events. By focusing only on breaking below the entry point at $18 and targeting trades within the target range ($3.43), it misses out on potential longer-term momentum opportunities.\n\nTrade Count Implication:\nA more balanced approach that takes into account multiple factors might yield better results. For instance, analyzing both the immediate high and low of each breakout event as well as considering past trendlines and support/resistance levels could provide a more comprehensive view of potential future price movements.\n\nWould Change Your Mind?\nGiven the limitations of my previous analysis, I would consider revising my strategy to incorporate a more robust model that considers not just",
+      "family": "donchian",
+      "id": "M001",
+      "model_raw": "{\"family\": \"donchian\", \"params\": {\"entry\": 45, \"exit\": 18, \"target_r\": 3.43}, \"rationale\": \"captures medium breakouts\"}",
+      "params": {
+        "entry": 45,
+        "exit": 18,
+        "target_r": 3.43
+      },
+      "proposed_at": "2026-11-26T10:50:39+00:00",
+      "rationale": "captures medium breakouts",
+      "seen_before": false,
+      "selection": {
+        "calmar": 0.3431,
+        "exposure": 0.3735,
+        "maxdd": -0.0456,
+        "pf": 1.7008,
+        "ret": 0.046,
+        "sharpe": 0.4526,
+        "sortino": 0.6768,
+        "trades": 8,
+        "win": 0.5
+      },
+      "status": "selected"
+    },
+    {
+      "asset": "BTC",
+      "critic": "passes selection floor",
+      "critic_note": "Critique:\nThe strategy relies heavily on the RSI as an indicator to identify potential entry points. However, this approach can lead to overfitting and poor performance in high-frequency trading scenarios. As such, it may not always provide accurate predictions or reliable stop-loss orders.\n\nTrade Count Implication:\nTrading a strategy with a high volume of trades can sometimes result in a significant loss if the trailing stops do not adequately cover losses. This scenario requires careful consideration before implementing a new strategy.\n\nChange Your Mind:\nIt's crucial to reassess any existing strategies after incorporating new indicators like RSI into your trading model. If you notice that the strategy continues to underperform despite incorporating RSI, it might be time to evaluate other factors influencing market dynamics.",
+      "family": "rsi",
+      "id": "M002",
+      "model_raw": "{\n  \"family\": \"rsi\",\n  \"params\": {\n    \"period\": 2,\n    \"rsi_entry\": 15.0\n  },\n  \"rationale\": \"uses RSI for trend analysis\"\n}",
+      "params": {
+        "period": 2,
+        "rsi_entry": 15.0
+      },
+      "proposed_at": "2026-11-26T10:50:58+00:00",
+      "rationale": "uses RSI for trend analysis",
+      "seen_before": false,
+      "selection": {
+        "calmar": 0.7461,
+        "exposure": 0.1026,
+        "maxdd": -0.0129,
+        "pf": 1.9669,
+        "ret": 0.0281,
+        "sharpe": 0.5901,
+        "sortino": 0.9534,
+        "trades": 26,
+        "win": 0.7692
+      },
+      "status": "selected"
+    },
+    {
+      "asset": "GOLD",
+      "critic": "too few trades to say anything",
+      "critic_note": "The metric \"return\" and \"sharpe ratio\" suggest that the strategy has been effective in capturing short-term returns and maximizing Sharpe ratios, which might indicate a well-thought-out trading algorithm. However, the high number of trades (7) suggests there may not have been enough discipline or patience to execute the trades at appropriate times. This could lead to overfitting risk if the algorithm becomes overly dependent on these specific metrics.\n\nRegarding the proposed rule (\"donchian\"), it seems like a simple approach but might be underused due to its simplicity. If the strategy were more complex, such as using multiple indicators or incorporating technical analysis techniques, it might offer better performance. Additionally, the use of just two parameters (\"target_r\") might",
+      "family": "donchian",
+      "id": "M003",
+      "model_raw": "{\"family\": \"donchian\", \"params\": {\"entry\": 40, \"exit\": 20, \"target_r\": 3.0}, \"rationale\": \"captures medium breakouts\"}",
+      "params": {
+        "entry": 40,
+        "exit": 20,
+        "target_r": 3.0
+      },
+      "proposed_at": "2026-11-26T10:52:11+00:00",
+      "rationale": "captures medium breakouts",
+      "seen_before": false,
+      "selection": {
+        "calmar": 1.998,
+        "exposure": 0.2123,
+        "maxdd": -0.0239,
+        "pf": 4.8633,
+        "ret": 0.0976,
+        "sharpe": 1.3608,
+        "sortino": 2.0914,
+        "trades": 7,
+        "win": 0.5714
+      },
+      "status": "rejected"
+    },
+    {
+      "asset": "GOLD",
+      "critic": "too few trades to say anything",
+      "critic_note": "The metric suggests that there were only 7 trades made in this strategy, which indicates potential overfitting. The Sharpe ratio of 0.54 also suggests that the strategy may not have generated significant returns consistently or at all.\n\nTrade count alone does not necessarily imply whether a strategy will perform well. Other factors such as market conditions, risk tolerance, and diversification strategies should also be considered. Therefore, based solely on these metrics, I would likely recommend against investing in this strategy.",
+      "family": "donchian",
+      "id": "M004",
+      "model_raw": "{\n  \"family\": \"donchian\",\n  \"params\": {\n    \"entry\": 60,\n    \"exit\": 15,\n    \"target_r\": 3.0,\n    \"rationale\": \"captures medium breakouts\"\n  },\n  \"reasoning\": \"This new hypothesis is different from the rejected ones in terms of capturing medium breaks out, as it targets the 60-15 range instead of just breaking out above 60.\"\n}",
+      "params": {
+        "entry": 60,
+        "exit": 15,
+        "target_r": 3.0
+      },
+      "proposed_at": "2026-11-26T10:52:24+00:00",
+      "rationale": "",
+      "seen_before": false,
+      "selection": {
+        "calmar": 0.6081,
+        "exposure": 0.2143,
+        "maxdd": -0.03,
+        "pf": 3.07,
+        "ret": 0.0368,
+        "sharpe": 0.5444,
+        "sortino": 0.7477,
+        "trades": 7,
+        "win": 0.4286
+      },
+      "status": "rejected"
     }
   ]
 }
