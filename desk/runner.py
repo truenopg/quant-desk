@@ -12,6 +12,8 @@ says so.
 """
 from __future__ import annotations
 
+import math
+
 from datetime import datetime
 from pathlib import Path
 
@@ -74,6 +76,10 @@ def exposure(fills, bars) -> float:
 
 
 def run_one(factory, bars, costs):
+    for b in bars:
+        for v in (b.open, b.high, b.low, b.close):
+            if not math.isfinite(v):
+                raise ValueError(f"non-finite price at {b.ts}: refusing silent result")
     bt = Backtest(factory(), Broker(CASH, costs))
     bt.run(bars)
     s = summary(bt.equity_curve)

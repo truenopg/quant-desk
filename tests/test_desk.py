@@ -77,3 +77,14 @@ class TestModelParsing(_u.TestCase):
         p = _clamp("sma", {"fast": 40, "slow": 30, "target_r": None})
         self.assertGreater(p["slow"], p["fast"])
         self.assertIsNone(p["target_r"])
+
+
+class TestBrokenData(_u.TestCase):
+    def test_nan_raises_loud(self):
+        import math as m
+        from bt.core import Bar
+        from datetime import datetime, timedelta
+        bars = [Bar(datetime(2024, 1, 1) + timedelta(days=i), 100 + i, 101 + i, 99 + i, 100 + i, 1.0) for i in range(50)]
+        bars[25] = Bar(bars[25].ts, m.nan, 1, 1, 1, 1.0)
+        with self.assertRaises(ValueError):
+            run_one(lambda: None, bars, 0.0)
