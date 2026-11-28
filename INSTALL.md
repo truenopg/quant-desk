@@ -26,12 +26,16 @@ Disk: ~2.5 GB with CPU-only torch (deps ~1.2 GB, model ~1 GB on first model run)
 
 ## Windows
 
-    # install Python 3.10+ from python.org (tick "Add python.exe to PATH")
+    # 1. install Python 3.10+ from python.org (tick "Add python.exe to PATH")
+    #    and Git from git-scm.com
+    # 2. in PowerShell:
+    git clone --recurse-submodules https://github.com/truenopg/quant-desk.git
+    cd quant-desk
     py -m venv .venv
-    .venv\Scripts\activate
+    .venv\Scripts\Activate.ps1
+    # if PowerShell blocks the script: Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+    pip install torch --index-url https://download.pytorch.org/whl/cpu
     pip install -r requirements.txt
-    # CPU-only torch if needed:
-    # pip install torch --index-url https://download.pytorch.org/whl/cpu
 
 ## Run
 
